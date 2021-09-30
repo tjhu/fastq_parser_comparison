@@ -1,0 +1,3 @@
+[submodule "readfq"]
+	path = readfq
+	url = https://github.com/lh3/readfq.git
