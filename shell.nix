@@ -11,6 +11,9 @@ in pkgs.mkShell {
   buildInputs = with pkgs; [
     ninja
     meson
+    cmake
+    abseil-cpp
+    glog
 
     clang-tools
     gdb

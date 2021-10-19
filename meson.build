@@ -1,5 +1,5 @@
 project(
-    'cpp-skeleton',
+    'fastq_parser_comparison',
     ['c', 'cpp'],
     default_options: [
         'buildtype=release',
@@ -13,7 +13,11 @@ project(
 cpp_args = []
 add_project_arguments(cpp_args, language: 'cpp')
 
-dependencies = []
+dependencies = [
+  dependency('absl_flags'),
+  dependency('absl_flags_parse'),
+  dependency('glog'),
+]
 
 include_directories = []
 
@@ -22,7 +26,7 @@ srcs = [
 ]
 
 executable(
-  'cpp-skeleton',
+  'fastq_parser_comparison',
   srcs,
   dependencies: dependencies,
   include_directories: include_directories,
