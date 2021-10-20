@@ -3,4 +3,4 @@
 	url = https://github.com/lh3/readfq.git
 [submodule "fxtract"]
 	path = fxtract
-	url = https://github.com/ctSkennerton/fxtract.git
+	url = https://github.com/mars-research/fxtract.git

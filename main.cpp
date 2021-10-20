@@ -9,14 +9,14 @@
 #include <iostream>
 #include <string_view>
 
+#include "readfq/kseq.h"
+#include "fxtract/kseq.hpp"
+
 ABSL_FLAG(std::string, input_file, "SRR072006.fastq", "input file");
 
 typedef void (*benchmark_fn_t)(std::string_view);
 
-namespace readfq {
-#include "readfq/kseq.h"
 KSEQ_INIT(int, read)
-
 void readfq(std::string_view input_file) {
   int fd = open(input_file.data(), O_RDONLY);
   PCHECK(fd >= 0) << "Failed to open file: " << input_file;
@@ -24,25 +24,23 @@ void readfq(std::string_view input_file) {
   kseq_t* seq = kseq_init(fd);
   while (kseq_read(seq) >= 0) {
     // noop
+    // puts(seq->seq.s);
   }
   kseq_destroy(seq);
 
   close(fd);
 }
-}  // namespace readfq
 
-namespace fxtract {
-#undef AC_KSEQ_H
-#include "fxtract/kseq.hpp"
-void fxtract(std::string_view input_file) {
+void fxtract1(std::string_view input_file) {
+  using namespace fxtract;
   gzFile file = gzopen(input_file.data(), "r");
   kstream ks(file, gzread);
   kseq seq;
   while (ks.read(seq) > 0) {
-    std::cout << seq.seq;
+    // noop
+    // std::cout << seq.seq;
   }
 }
-}  // namespace fxtract
 
 void read(std::string_view input_file) {
   int fd = open(input_file.data(), O_RDONLY);
@@ -83,7 +81,8 @@ int main(int argc, char** argv) {
   CHECK_NE(input_file, "") << "Must specify a input file";
 
   benchmark("read", read, input_file);
-  benchmark("readfq", readfq::readfq, input_file);
+  benchmark("readfq", readfq, input_file);
+  benchmark("fxtract", fxtract1, input_file);
 
   return 0;
 }
