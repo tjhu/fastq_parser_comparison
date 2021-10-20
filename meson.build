@@ -17,12 +17,14 @@ dependencies = [
   dependency('absl_flags'),
   dependency('absl_flags_parse'),
   dependency('glog'),
+  dependency('zlib'),
 ]
 
 include_directories = []
 
 srcs = [
   'main.cpp',
+  'fxtract/kseq.cpp',
 ]
 
 executable(

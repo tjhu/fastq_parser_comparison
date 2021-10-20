@@ -12,8 +12,10 @@ in pkgs.mkShell {
     ninja
     meson
     cmake
+
     abseil-cpp
     glog
+    zlib
 
     clang-tools
     gdb
