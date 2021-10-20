@@ -19,10 +19,7 @@ typedef void(*benchmark_fn_t)(std::string_view);
 
 void read(std::string_view input_file) {
     int fd = open(input_file.data(), O_RDONLY);
-    if (fd < 0) {
-        perror("Failed to open file.");
-        CHECK_GE(fd, 0);
-    }
+    PCHECK(fd >= 0) << "Failed to open file: " << input_file;
 
     constexpr size_t BUFF_SIZE = 4096;
     char buff[BUFF_SIZE];
@@ -35,10 +32,7 @@ void read(std::string_view input_file) {
 
 void readfq(std::string_view input_file) {
     int fd = open(input_file.data(), O_RDONLY);
-    if (fd < 0) {
-        perror("Failed to open file.");
-        CHECK_GE(fd, 0);
-    }
+    PCHECK(fd >= 0) << "Failed to open file: " << input_file;
 
     kseq_t *seq = kseq_init(fd);
     while (kseq_read(seq) >= 0) {
